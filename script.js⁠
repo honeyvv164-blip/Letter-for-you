@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         petal.style.fontSize = (Math.random() * 0.8 + 1) + 'rem';
         sakuraContainer.appendChild(petal);
     }
-});
 document.addEventListener('DOMContentLoaded', () => {
     const checkbox = document.getElementById('toggle-letter');
     const label = document.getElementById('letterLabel');
