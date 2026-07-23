@@ -1,16 +1,59 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ฟังก์ชันสำหรับเปิด/ปิดซองจดหมาย
+function toggleEnvelope(e) {
     const envelopeContainer = document.getElementById('envelopeContainer');
-    const sakuraContainer = document.getElementById('sakura-container');
+    const isOpening = !envelopeContainer.classList.contains('open');
+    
+    // สลับคลาส open
+    envelopeContainer.classList.toggle('open');
 
-    // 1. สร้างดอกซากุระและละอองวิ้งๆ ลอยร่วงในพื้นหลัง
+    // ถ้าเป็นการเปิด ให้ปล่อยหัวใจเด้ง
+    if (isOpening) {
+        // หาจุดศูนย์กลางของซองจดหมาย
+        const rect = envelopeContainer.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        createHeartBurst(centerX, centerY);
+    }
+}
+
+// สร้างหัวใจพุ่งกระจาย
+function createHeartBurst(x, y) {
+    const heartEmojis = ['❤️', '💖', '💗', '💕', '🌸', '✨'];
+    const numHearts = 18;
+
+    for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart-particle');
+        heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+        const angle = (i / numHearts) * 360 + (Math.random() * 20 - 10);
+        const distance = Math.random() * 120 + 60;
+        const tx = Math.cos(angle * Math.PI / 180) * distance + 'px';
+        const ty = Math.sin(angle * Math.PI / 180) * distance + 'px';
+        const rot = (Math.random() * 360) + 'deg';
+
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        heart.style.setProperty('--tx', tx);
+        heart.style.setProperty('--ty', ty);
+        heart.style.setProperty('--rot', rot);
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 1200);
+    }
+}
+
+// สร้างดอกซากุระร่วงในพื้นหลัง
+document.addEventListener('DOMContentLoaded', () => {
+    const sakuraContainer = document.getElementById('sakura-container');
     const sakuraEmojis = ['🌸', '🌺', '✨', '🌸', '💖'];
-    const sakuraCount = 25;
+    const sakuraCount = 20;
 
     for (let i = 0; i < sakuraCount; i++) {
-        createSakuraPetal();
-    }
-
-    function createSakuraPetal() {
         const petal = document.createElement('div');
         petal.classList.add('sakura');
         petal.innerText = sakuraEmojis[Math.floor(Math.random() * sakuraEmojis.length)];
@@ -22,51 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sakuraContainer.appendChild(petal);
     }
-
-    // 2. เมื่อคลิกที่ซอง ให้สลับการเปิด/ปิด และปล่อยหัวใจเด้งออกมา
-    envelopeContainer.addEventListener('click', function(e) {
-        const isOpening = !this.classList.contains('open');
-        this.classList.toggle('open');
-
-        // แสดงเอฟเฟกต์หัวใจเฉพาะตอนเปิดออก
-        if (isOpening) {
-            const rect = this.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            createHeartBurst(centerX, centerY);
-        }
-    });
-
-    // 3. ฟังก์ชันสร้างหัวใจพุ่งกระจายรอบทิศทาง
-    function createHeartBurst(x, y) {
-        const heartEmojis = ['❤️', '💖', '💗', '💕', '🌸', '✨'];
-        const numHearts = 18;
-
-        for (let i = 0; i < numHearts; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-
-            // คำนวณทิศทางการพุ่ง
-            const angle = (i / numHearts) * 360 + (Math.random() * 20 - 10);
-            const distance = Math.random() * 120 + 60;
-            const tx = Math.cos(angle * Math.PI / 180) * distance + 'px';
-            const ty = Math.sin(angle * Math.PI / 180) * distance + 'px';
-            const rot = (Math.random() * 360) + 'deg';
-
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            heart.style.setProperty('--tx', tx);
-            heart.style.setProperty('--ty', ty);
-            heart.style.setProperty('--rot', rot);
-
-            document.body.appendChild(heart);
-
-            // ลบหัวใจออกจากโค้ดเมื่อแสดงแอนิเมชันเสร็จ
-            setTimeout(() => {
-                heart.remove();
-            }, 1200);
-        }
-    }
 });
+/* ป้องกันปัญหากดไม่ติดในจอสัมผัส/iPad */
+.container * {
+    pointer-events: none;
+}
+.container {
+    pointer-events: auto;
+}
+
+   
