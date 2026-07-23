@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -23,9 +23,6 @@
         <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
         <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
     </div>
-
-    <!-- 🌸 ข้อความหัวข้อ Letter For u -->
-    <h1 class="main-title">Letter For u</h1>
 
     <div class="wrapper">
         <div class="container" id="letterContainer">
@@ -66,22 +63,26 @@
 
             <!-- กล่องใส่รหัสผ่านวันเกิด -->
             <div class="passcode-box" id="passcodeBox">
-                <p class="passcode-hint">🔒 ใส่รหัสวันเกิดเค้าก่อนเปิดนะ :)</p>
+                <p class="passcode-hint">🔒 ใส่รหัสวันเกิดแฟนก่อนเปิดนะ :)</p>
                 <div class="input-group">
                     <input type="password" id="passcodeInput" maxlength="6" placeholder="******" pattern="\d*">
                     <button id="unlockBtn" type="button">เปิดจดหมาย 🌸</button>
                 </div>
                 <p id="errorMsg" class="error-msg"></p>
             </div>
+
+            <!-- ปุ่มสำหรับกดปิดจดหมาย (จะแสดงขึ้นมาหลังจากเปิดจดหมายแล้ว) -->
+            <button id="closeBtn" class="close-btn" type="button">พับเก็บจดหมาย 💌</button>
         </div>
     </div>
 
-    <!-- ฝังระบบเปิดจดหมายไว้ในนี้โดยตรงแบบ 100% -->
+    <!-- สคริปต์ควบคุมการเปิด-ปิดจดหมาย -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('letterContainer');
             const passcodeInput = document.getElementById('passcodeInput');
             const unlockBtn = document.getElementById('unlockBtn');
+            const closeBtn = document.getElementById('closeBtn');
             const errorMsg = document.getElementById('errorMsg');
             const passcodeBox = document.getElementById('passcodeBox');
 
@@ -90,6 +91,7 @@
             const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
             popSound.load();
 
+            // ฟังก์ชันเปิดจดหมาย
             function checkPasscode() {
                 const enteredCode = passcodeInput.value.trim();
 
@@ -104,6 +106,8 @@
                     passcodeBox.style.opacity = "0";
                     setTimeout(() => {
                         passcodeBox.style.display = "none";
+                        closeBtn.style.display = "block";
+                        setTimeout(() => closeBtn.style.opacity = "1", 50);
                     }, 300);
 
                 } else {
@@ -113,7 +117,21 @@
                 }
             }
 
+            // ฟังก์ชันปิดจดหมาย
+            function closeLetter() {
+                container.classList.remove('open');
+                closeBtn.style.opacity = "0";
+                
+                setTimeout(() => {
+                    closeBtn.style.display = "none";
+                    passcodeBox.style.display = "flex";
+                    setTimeout(() => passcodeBox.style.opacity = "1", 50);
+                    passcodeInput.value = "";
+                }, 400);
+            }
+
             unlockBtn.addEventListener('click', checkPasscode);
+            closeBtn.addEventListener('click', closeLetter);
 
             passcodeInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
