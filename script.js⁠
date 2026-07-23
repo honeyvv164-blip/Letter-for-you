@@ -128,3 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
     label.addEventListener('touchstart', handleSound, { passive: true });
     label.addEventListener('click', handleSound);
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const checkbox = document.getElementById('toggle-letter');
+    const label = document.getElementById('letterLabel');
+
+    // ฝังไฟล์เสียงป๊อป/ติ๊ง (Base64) ไว้ในโค้ดโดยตรง เพื่อไม่ให้ Safari บล็อก
+    const soundData = "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1XW15mZ2N1eHN3fnx9fIKEhIOEhoeFi4yMjI2Oj46PkJGQkJGRk5OVlZaXmJiam5ydnp2fICAgISEiIicnKCkrLC0uLzAyMzM1Njc4ODk6Ozw9Pj9AQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpbXF1eX2BhYmNkZWJj";
+    
+    const audio = new Audio();
+    audio.src = soundData;
+    audio.preload = 'auto';
+
+    // ฟังก์ชันสั่งเล่นเสียง
+    function triggerSound() {
+        if (!checkbox.checked) {
+            audio.currentTime = 0;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+        }
+    }
+
+    // รองรับการแตะหน้าจอทุกรูปแบบสำหรับ iPad / iPhone
+    label.addEventListener('touchend', function(e) {
+        triggerSound();
+    }, false);
+
+    label.addEventListener('click', function(e) {
+        triggerSound();
+    }, false);
+});
