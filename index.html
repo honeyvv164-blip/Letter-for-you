@@ -11,12 +11,19 @@
 </head>
 <body>
 
-    <!-- ฉากหลังซากุระ -->
-    <div id="sakura-container"></div>
+    <!-- ฉากหลังซากุระร่วง (ใช้ CSS เพียวๆ) -->
+    <div class="sakura-bg">
+        <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
+        <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
+    </div>
+
+    <!-- ตัวควบคุมการเปิด/ปิด ด้วย Checkbox -->
+    <input type="checkbox" id="toggle-letter">
 
     <div class="wrapper">
-        <div class="container" id="envelopeContainer">
-            <div class="envelope" id="mainEnvelope">
+        <!-- label จะทำหน้าที่เป็นปุ่มกดที่กดแล้วเปิดซองได้ทันที -->
+        <label for="toggle-letter" class="container">
+            <div class="envelope">
                 <div class="flap"></div>
                 <div class="pocket"></div>
                 <div class="stamp">
@@ -46,13 +53,12 @@
                 </div>
             </div>
             
-            <!-- ปุ่มกดเปิดจดหมายแบบชัดเจน -->
-            <button class="open-btn" id="openBtn" type="button">
-                🌸 กดตรงนี้เพื่อเปิดอ่านนะ 🌸
-            </button>
-        </div>
+            <div class="open-btn">
+                <span class="btn-text-open">🌸 กดตรงนี้เพื่อเปิดอ่านนะ 🌸</span>
+                <span class="btn-text-close">🌸 กดเพื่อเก็บจดหมาย 🌸</span>
+            </div>
+        </label>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
