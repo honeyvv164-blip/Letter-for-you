@@ -22,8 +22,8 @@ body {
     font-size: 3.5rem;
     color: #e05275;
     text-shadow: 2px 2px 8px rgba(224, 82, 117, 0.2);
-    margin-bottom: 20px;
-    margin-top: -20px;
+    margin-bottom: 25px;
+    margin-top: -10px;
     z-index: 10;
     animation: pulseTitle 2s infinite alternate;
 }
@@ -82,12 +82,12 @@ body {
     position: relative;
     width: 300px;
     height: 200px;
-    background: #ff85a2;
+    background: #ff7597; /* สีพื้นหลังในซอง */
     border-radius: 0 0 10px 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    transition: all 0.5s ease;
 }
 
+/* ฝาพับบน */
 .flap {
     position: absolute;
     top: 0;
@@ -96,28 +96,29 @@ body {
     height: 0;
     border-left: 150px solid transparent;
     border-right: 150px solid transparent;
-    border-top: 110px solid #ff6b8b;
+    border-top: 110px solid #ff527b;
     transform-origin: top;
     transition: transform 0.5s ease 0.5s, z-index 0.5s ease 0.5s;
-    z-index: 4;
+    z-index: 5;
 }
 
+/* ตัวกระเป๋าซองจดหมายปิดหน้า (แก้ให้ทึบไม่เห็นข้างใน) */
 .pocket {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 0;
     height: 0;
-    border-left: 150px solid #ffa3b5;
-    border-right: 150px solid #ffa3b5;
-    border-bottom: 100px solid #ff85a2;
+    border-left: 150px solid #ff92ad;
+    border-right: 150px solid #ff92ad;
+    border-bottom: 105px solid #ff7597;
     border-radius: 0 0 10px 10px;
-    z-index: 3;
+    z-index: 4;
 }
 
 .stamp {
     position: absolute;
-    top: 35px;
+    top: 38px;
     left: 50%;
     transform: translateX(-50%);
     width: 40px;
@@ -127,15 +128,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 6;
     transition: opacity 0.3s ease 0.3s;
 }
 
 /* --- ตัวกระดาษจดหมาย --- */
 .letter {
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     left: 15px;
     width: 270px;
     height: 180px;
@@ -215,7 +216,7 @@ body {
 
 .btn-text-close { display: none; }
 
-/* --- เมื่อกตเช็กเปิดจดหมาย --- */
+/* --- เมื่อกดเปิดจดหมาย --- */
 #toggle-letter:checked + .wrapper .flap {
     transform: rotateX(180deg);
     z-index: 1;
@@ -229,7 +230,7 @@ body {
 #toggle-letter:checked + .wrapper .letter {
     transform: translateY(-120px);
     height: 480px;
-    z-index: 6;
+    z-index: 7;
     overflow-y: auto;
     transition: transform 0.6s ease 0.5s, height 0.6s ease 0.5s;
 }
