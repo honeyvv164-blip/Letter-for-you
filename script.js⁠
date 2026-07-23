@@ -1,21 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const checkbox = document.getElementById('toggle-letter');
-    const label = document.getElementById('letterLabel');
+    const container = document.getElementById('letterContainer');
+    const passcodeInput = document.getElementById('passcodeInput');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const passcodeBox = document.getElementById('passcodeBox');
 
-    // สร้างไฟล์เสียงป๊อปใสๆ ดึงตรงจาก CDN Fast-Load
+    // รหัสผ่านคือวันเกิด: 101149
+    const CORRECT_CODE = "101149";
+
+    // เสียงป๊อป
     const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
     popSound.load();
 
-    function triggerPopSound() {
-        if (!checkbox.checked) {
+    function checkPasscode() {
+        const enteredCode = passcodeInput.value.trim();
+
+        if (enteredCode === CORRECT_CODE) {
+            errorMsg.textContent = "";
+            
+            // เล่นเสียง
             popSound.currentTime = 0;
-            popSound.play().catch(err => {
-                console.log("Audio play error:", err);
-            });
+            popSound.play().catch(e => console.log(e));
+
+            // เปิดจดหมาย
+            container.classList.add('open');
+
+            // ซ่อนกล่องใส่รหัสผ่าน
+            passcodeBox.style.opacity = "0";
+            setTimeout(() => {
+                passcodeBox.style.display = "none";
+            }, 300);
+
+        } else {
+            errorMsg.textContent = "รหัสไม่ถูกต้องนะ ลองอีกทีสิอ้วน 🥺";
+            passcodeInput.value = "";
+            passcodeInput.focus();
         }
     }
 
-    // รองรับระบบสัมผัส Safari/iPad และคลิกบนคอมพิวเตอร์
-    label.addEventListener('touchstart', triggerPopSound, { passive: true });
-    label.addEventListener('click', triggerPopSound);
+    // กดปุ่มเปิด
+    unlockBtn.addEventListener('click', checkPasscode);
+
+    // กด Enter บนคีย์บอร์ดก็ปลดล็อกได้เหมือนกัน
+    passcodeInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            checkPasscode();
+        }
+    });
 });
