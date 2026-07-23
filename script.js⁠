@@ -73,3 +73,58 @@ document.addEventListener('DOMContentLoaded', () => {
         sakuraContainer.appendChild(petal);
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const checkbox = document.getElementById('toggle-letter');
+    const label = document.getElementById('letterLabel');
+
+    // สร้างระบบเสียงสังเคราะห์ในตัวบราวเซอร์ (ชัวร์ที่สุดสำหรับ Safari/iPad)
+    let audioCtx = null;
+
+    function playChime() {
+        try {
+            // สร้าง AudioContext เมื่อมีการกดสัมผัส
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            // ตัวสร้างคลื่นเสียง "ติ๊ง" ✨ (ความถี่สูง ใสๆ)
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            
+            // เล่นโน้ตเสียงป๊อป/ติ๊งใสๆ (ไล่เสียงสูง)
+            const now = audioCtx.currentTime;
+            osc.frequency.setValueAtTime(880, now); // โน้ต A5
+            osc.frequency.exponentialRampToValueAtTime(1760, now + 0.1); // พุ่งไป A6
+
+            // ปรับความดังให้ค่อยๆ จางหายไปแบบนุ่มนวล
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.35);
+        } catch (e) {
+            console.log("Audio Error:", e);
+        }
+    }
+
+    // ดักจับการกดทั้งแบบ Touch (มือถือ/iPad) และ Click (คอมพิวเตอร์)
+    function handleSound(e) {
+        // เล่นเสียงเฉพาะตอนที่กำลังจะ "เปิด" ซองจดหมาย
+        if (!checkbox.checked) {
+            playChime();
+        }
+    }
+
+    label.addEventListener('touchstart', handleSound, { passive: true });
+    label.addEventListener('click', handleSound);
+});
