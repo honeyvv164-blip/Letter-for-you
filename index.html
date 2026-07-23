@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ถึงอ้วน 🤍</title>
 
-    <!-- 🖼️ รูปตัวอย่างพรีวิวตอนส่งลิงก์ในแชท (น้องแมวถือดอกไม้) -->
+    <!-- 🖼️ รูปพรีวิวส่งในแชท (น้องแมวถือดอกไม้) -->
     <meta property="og:title" content="ถึงอ้วน 🤍">
     <meta property="og:description" content="มีข้อความสั้นๆ อยากให้อ่านนะ 🌸">
     <meta property="og:image" content="cover.png">
@@ -69,13 +69,58 @@
                 <p class="passcode-hint">🔒 ใส่รหัสวันเกิดแฟนก่อนเปิดนะ :)</p>
                 <div class="input-group">
                     <input type="password" id="passcodeInput" maxlength="6" placeholder="******" pattern="\d*">
-                    <button id="unlockBtn">เปิดจดหมาย 🌸</button>
+                    <button id="unlockBtn" type="button">เปิดจดหมาย 🌸</button>
                 </div>
                 <p id="errorMsg" class="error-msg"></p>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ฝังระบบเปิดจดหมายไว้ในนี้โดยตรงแบบ 100% -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('letterContainer');
+            const passcodeInput = document.getElementById('passcodeInput');
+            const unlockBtn = document.getElementById('unlockBtn');
+            const errorMsg = document.getElementById('errorMsg');
+            const passcodeBox = document.getElementById('passcodeBox');
+
+            const CORRECT_CODE = "101149";
+
+            const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
+            popSound.load();
+
+            function checkPasscode() {
+                const enteredCode = passcodeInput.value.trim();
+
+                if (enteredCode === CORRECT_CODE) {
+                    errorMsg.textContent = "";
+                    
+                    popSound.currentTime = 0;
+                    popSound.play().catch(e => console.log(e));
+
+                    container.classList.add('open');
+
+                    passcodeBox.style.opacity = "0";
+                    setTimeout(() => {
+                        passcodeBox.style.display = "none";
+                    }, 300);
+
+                } else {
+                    errorMsg.textContent = "รหัสไม่ถูกต้องนะ ลองอีกทีสิอ้วน 🥺";
+                    passcodeInput.value = "";
+                    passcodeInput.focus();
+                }
+            }
+
+            unlockBtn.addEventListener('click', checkPasscode);
+
+            passcodeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkPasscode();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
