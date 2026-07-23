@@ -16,36 +16,42 @@ body {
     padding: 20px;
 }
 
-/* แก้ไขไม่ให้ฉากหลังบังการคลิก */
-#sakura-container {
+/* ซ่อนช่อง Checkbox ไว้ */
+#toggle-letter {
+    display: none;
+}
+
+/* ซากุระปลิวด้วย CSS Pure */
+.sakura-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none !important;
+    pointer-events: none;
     z-index: 0;
+    display: flex;
+    justify-content: space-around;
 }
 
-.sakura {
-    position: absolute;
-    top: -10%;
-    font-size: 1.8rem;
-    user-select: none;
-    pointer-events: none !important;
-    animation: fall linear infinite;
-    opacity: 0.8;
+.sakura-bg span {
+    font-size: 1.6rem;
+    animation: fall 7s linear infinite;
+    opacity: 0.7;
 }
+
+.sakura-bg span:nth-child(2n) { animation-duration: 9s; animation-delay: 1s; }
+.sakura-bg span:nth-child(3n) { animation-duration: 6s; animation-delay: 2s; }
+.sakura-bg span:nth-child(4n) { animation-duration: 8s; animation-delay: 3s; }
 
 @keyframes fall {
-    0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.9; }
-    50% { transform: translateY(50vh) rotate(180deg) translateX(30px); }
-    100% { transform: translateY(105vh) rotate(360deg) translateX(-20px); opacity: 0.2; }
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
 }
 
 .wrapper {
     position: relative;
-    z-index: 100;
+    z-index: 10;
     width: 100%;
     max-width: 480px;
     display: flex;
@@ -59,9 +65,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ตัวซองจดหมาย */
+/* ซองจดหมาย */
 .envelope {
     position: relative;
     width: 100%;
@@ -73,10 +81,9 @@ body {
     box-shadow: 0 20px 40px rgba(230, 100, 130, 0.3);
     overflow: hidden;
     transition: overflow 0.3s ease;
-    cursor: pointer;
 }
 
-/* ตัวกระดาษจดหมาย */
+/* จดหมายสีขาวด้านใน */
 .letter {
     position: absolute;
     bottom: -200px;
@@ -87,7 +94,7 @@ body {
     border-radius: 14px;
     padding: 22px 18px;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-    transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 2;
     border: 2px dashed #ffccd5;
     overflow-y: auto;
@@ -176,7 +183,7 @@ body {
 
 .stamp-icon { font-size: 1.6rem; }
 
-/* ปุ่มกดเปิดซองจดหมาย */
+/* ปุ่มเปิดซอง */
 .open-btn {
     margin-top: 35px;
     padding: 12px 24px;
@@ -184,51 +191,37 @@ body {
     color: #c9184a;
     border: 2px solid #ff8fa3;
     border-radius: 25px;
-    font-family: 'Mali', cursive;
     font-size: 1rem;
     font-weight: 700;
-    cursor: pointer;
     box-shadow: 0 4px 15px rgba(255, 143, 163, 0.4);
     transition: all 0.2s ease;
-    z-index: 101;
 }
 
-.open-btn:active {
-    transform: scale(0.95);
-}
+.btn-text-close { display: none; }
 
-/* เอฟเฟกต์หัวใจระเบิด */
-.heart-particle {
-    position: absolute;
-    pointer-events: none;
-    font-size: 1.5rem;
-    animation: popAndFade 1.2s ease-out forwards;
-    z-index: 200;
-}
+/* ==========================================
+   เวทมนตร์ CSS : เมื่อมีการติ๊ก Checkbox (กดคลิก)
+   ========================================== */
 
-@keyframes popAndFade {
-    0% { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(0deg); }
-    50% { opacity: 0.9; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot)); }
-    100% { opacity: 0; transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) - 40px)) scale(0.8) rotate(var(--rot)); }
-}
-
-/* สถานะเปิดซอง */
-.container.open .flap {
+#toggle-letter:checked + .wrapper .flap {
     transform: rotateX(180deg);
     z-index: 1;
 }
 
-.container.open .stamp {
+#toggle-letter:checked + .wrapper .stamp {
     transform: translateX(-50%) scale(0.5);
     opacity: 0;
 }
 
-.container.open .envelope {
+#toggle-letter:checked + .wrapper .envelope {
     overflow: visible;
 }
 
-.container.open .letter {
+#toggle-letter:checked + .wrapper .letter {
     transform: translateY(-230px);
     height: 440px;
     z-index: 5;
 }
+
+#toggle-letter:checked + .wrapper .btn-text-open { display: none; }
+#toggle-letter:checked + .wrapper .btn-text-close { display: inline; }
