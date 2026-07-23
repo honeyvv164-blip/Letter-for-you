@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+    font-family: 'Mali', cursive, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* พื้นหลังซากุระปลิว */
+#sakura-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.sakura {
+    position: absolute;
+    top: -10%;
+    font-size: 1.8rem;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) translateX(30px);
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) translateX(-20px);
+        opacity: 0.2;
+    }
+}
+
+.wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: center;
+    margin-top: 80px; /* เว้นพื้นที่ด้านบนให้จดหมายเด้งขึ้นมา */
+}
+
+.container {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 1. ตัวซองจดหมาย (ขนาดใหญ่เต็มตา) */
+.envelope {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    height: 280px;
+    background-color: #ffb6c1;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 0 20px 40px rgba(230, 100, 130, 0.3), 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: overflow 0.3s ease;
+}
+
+/* 2. จดหมายสีขาวด้านใน */
+.letter {
+    position: absolute;
+    bottom: -200px;
+    left: 5%;
+    width: 90%;
+    height: 260px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 18px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+    border: 2px dashed #ffccd5;
+    overflow-y: auto;
+}
+
+.letter-inner {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.letter h2 {
+    color: #ff4d6d;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ff8fa3, transparent);
+    margin: 8px 0 14px 0;
+}
+
+.letter p {
+    color: #4a3e41;
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 600;
+}
+
+.signature {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #ff758f;
+    text-align: right;
+    font-weight: 700;
+}
+
+/* 3. ฝาซองบน */
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 220px solid transparent;
+    border-right: 220px solid transparent;
+    border-top: 150px solid #ff9ebb;
+    transform-origin: top;
+    transition: transform 0.5s ease, z-index 0.3s ease;
+    z-index: 4;
+}
+
+@media (max-width: 480px) {
+    .flap {
+        border-left-width: 50vw;
+        border-right-width: 50vw;
+    }
+}
+
+/* 4. ซองด้านหน้า */
+.pocket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-left: 220px solid #ffa6c1;
+    border-right: 220px solid #ffa6c1;
+    border-bottom: 140px solid #ff8fa3;
+    border-top: 140px solid transparent;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    z-index: 3;
+}
+
+@media (max-width: 480px) {
+    .pocket {
+        border-left-width: 50vw;
+        border-right-width: 50vw;
+    }
+}
+
+/* 5. ตราประทับสีชมพู Wax Seal */
+.stamp {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #ff4d6d 0%, #c9184a 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(160, 20, 60, 0.3), inset 0 0 6px rgba(255, 255, 255, 0.4);
+    z-index: 5;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+    border: 3px solid #ff8fa3;
+}
+
+.stamp-icon {
+    font-size: 1.6rem;
+}
+
+.hint {
+    margin-top: 35px;
+    text-align: center;
+    color: #c9184a;
+    font-size: 1rem;
+    font-weight: 700;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* เอฟเฟกต์หัวใจระเบิดกระจาย */
+.heart-particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: popAndFade 1.2s ease-out forwards;
+    z-index: 100;
+}
+
+@keyframes popAndFade {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.5) rotate(0deg);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot));
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) - 40px)) scale(0.8) rotate(var(--rot));
+    }
+}
+
+/* --- สถานะตอนเปิดซอง (Open State) --- */
+.container.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.container.open .stamp {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0;
+}
+
+.container.open .envelope {
+    overflow: visible;
+}
+
+.container.open .letter {
+    transform: translateY(-230px);
+    height: 440px;
+    z-index: 5;
+}
