@@ -11,18 +11,16 @@
 </head>
 <body>
 
-    <!-- ฉากหลังซากุระร่วง (ใช้ CSS เพียวๆ) -->
+    <!-- ฉากหลังซากุระร่วง -->
     <div class="sakura-bg">
         <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
         <span>🌸</span><span>🌺</span><span>✨</span><span>🌸</span><span>💖</span>
     </div>
 
-    <!-- ตัวควบคุมการเปิด/ปิด ด้วย Checkbox -->
     <input type="checkbox" id="toggle-letter">
 
     <div class="wrapper">
-        <!-- label จะทำหน้าที่เป็นปุ่มกดที่กดแล้วเปิดซองได้ทันที -->
-        <label for="toggle-letter" class="container">
+        <label for="toggle-letter" class="container" id="letterLabel">
             <div class="envelope">
                 <div class="flap"></div>
                 <div class="pocket"></div>
@@ -32,6 +30,11 @@
 
                 <div class="letter">
                     <div class="letter-inner">
+                        <!-- 🖼️ โค้ดดึงรูป profile.jpg ที่คุณอัปโหลดขึ้นไป -->
+                        <div class="photo-frame">
+                            <img src="profile.jpg" alt="Our Memory">
+                        </div>
+
                         <h2>ถึงอ้วน 🤍</h2>
                         <div class="divider"></div>
                         <p>
@@ -60,5 +63,6 @@
         </label>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
