@@ -16,12 +16,11 @@ body {
     padding: 20px;
 }
 
-/* ซ่อนช่อง Checkbox ไว้ */
 #toggle-letter {
     display: none;
 }
 
-/* ซากุระปลิวด้วย CSS Pure */
+/* ฉากหลังซากุระ */
 .sakura-bg {
     position: fixed;
     top: 0;
@@ -56,7 +55,7 @@ body {
     max-width: 480px;
     display: flex;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 .container {
@@ -83,7 +82,7 @@ body {
     transition: overflow 0.3s ease;
 }
 
-/* จดหมายสีขาวด้านใน */
+/* จดหมายสีขาว */
 .letter {
     position: absolute;
     bottom: -200px;
@@ -92,7 +91,7 @@ body {
     height: 260px;
     background: #ffffff;
     border-radius: 14px;
-    padding: 22px 18px;
+    padding: 20px 18px;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 2;
@@ -103,25 +102,46 @@ body {
 .letter-inner {
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
+}
+
+/* 🖼️ กรอบรูปถ่ายรูปคู่ */
+.photo-frame {
+    width: 170px;
+    height: 170px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 3px solid #ffccd5;
+    box-shadow: 0 4px 12px rgba(255, 143, 163, 0.3);
+    margin-bottom: 14px;
+    background-color: #fff;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .letter h2 {
     color: #ff4d6d;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .divider {
+    width: 100%;
     height: 2px;
     background: linear-gradient(to right, transparent, #ff8fa3, transparent);
-    margin: 8px 0 14px 0;
+    margin: 6px 0 12px 0;
 }
 
 .letter p {
     color: #4a3e41;
-    font-size: 1rem;
+    font-size: 0.98rem;
     line-height: 1.7;
     font-weight: 600;
 }
@@ -130,6 +150,7 @@ body {
     margin-top: 15px;
     font-size: 0.95rem;
     color: #ff758f;
+    width: 100%;
     text-align: right;
     font-weight: 700;
 }
@@ -183,7 +204,6 @@ body {
 
 .stamp-icon { font-size: 1.6rem; }
 
-/* ปุ่มเปิดซอง */
 .open-btn {
     margin-top: 35px;
     padding: 12px 24px;
@@ -199,10 +219,7 @@ body {
 
 .btn-text-close { display: none; }
 
-/* ==========================================
-   เวทมนตร์ CSS : เมื่อมีการติ๊ก Checkbox (กดคลิก)
-   ========================================== */
-
+/* เมื่อเปิดซอง */
 #toggle-letter:checked + .wrapper .flap {
     transform: rotateX(180deg);
     z-index: 1;
@@ -218,8 +235,8 @@ body {
 }
 
 #toggle-letter:checked + .wrapper .letter {
-    transform: translateY(-230px);
-    height: 440px;
+    transform: translateY(-260px);
+    height: 520px; /* เพิ่มความสูงการ์ดรองรับรูปภาพ */
     z-index: 5;
 }
 
