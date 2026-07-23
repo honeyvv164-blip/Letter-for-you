@@ -11,23 +11,18 @@
 </head>
 <body>
 
-    <!-- คอนเทนเนอร์ดอกซากุระปลิว -->
+    <!-- ฉากหลังซากุระ -->
     <div id="sakura-container"></div>
 
     <div class="wrapper">
-        <!-- ใส่ onclick ตรงนี้เลยเพื่อชัวร์ว่ากดติดแน่นอน -->
-        <div class="container" id="envelopeContainer" onclick="toggleEnvelope(event)">
-            <!-- ตัวซองจดหมาย -->
-            <div class="envelope">
+        <div class="container" id="envelopeContainer">
+            <div class="envelope" id="mainEnvelope">
                 <div class="flap"></div>
                 <div class="pocket"></div>
-                
-                <!-- ตราประทับสีชมพู Wax Seal -->
                 <div class="stamp">
                     <span class="stamp-icon">💖</span>
                 </div>
 
-                <!-- กระดาษจดหมายสีขาว -->
                 <div class="letter">
                     <div class="letter-inner">
                         <h2>ถึงอ้วน 🤍</h2>
@@ -51,7 +46,10 @@
                 </div>
             </div>
             
-            <div class="hint">🌸 คลิกที่ซองจดหมายเพื่อเปิดดูนะ 🌸</div>
+            <!-- ปุ่มกดเปิดจดหมายแบบชัดเจน -->
+            <button class="open-btn" id="openBtn" type="button">
+                🌸 กดตรงนี้เพื่อเปิดอ่านนะ 🌸
+            </button>
         </div>
     </div>
 
